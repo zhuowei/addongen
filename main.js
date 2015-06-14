@@ -1,6 +1,6 @@
 "use strict";
 (function() {
-var template, nameText, packageText, generateButton;
+var template, nameText, packageText, mcpeversionText, generateButton;
 
 function doProcess(inputName) {
 	return inputName.indexOf(".so") < 0;
@@ -12,7 +12,8 @@ function processFile(inputText) {
 		replace(/SKEL_GEN_NAME/g, nameText.value.toString()).
 		replace(/SKEL_GEN_ESCAPED_NAME/g, packageText.value.toString().split(".").pop()).
 		replace(/SKEL_GEN_LOG_TAG/g, packageText.value.toString().split(".").pop()).
-		replace(/SKEL_GEN_PACKAGE/g, packageText.value.toString());
+		replace(/SKEL_GEN_PACKAGE/g, packageText.value.toString()).
+		replace(/SKEL_GEN_MCPEVERSION/g, mcpeversionText.value.toString());
 }
 
 function generateZip() {
@@ -22,6 +23,10 @@ function generateZip() {
 	}
 	if (nameText.value.length == 0) {
 		alert("Invalid name");
+		return;
+	}
+	if (mcpeversionText.value.length == 0) {
+		alert("Invalid MCPE version");
 		return;
 	}
 	var output = new JSZip();
@@ -43,6 +48,7 @@ function loadHandler() {
 	});
 	nameText = document.getElementById("name");
 	packageText = document.getElementById("package");
+	mcpeversionText = document.getElementById("mcpeversion");
 	generateButton = document.getElementById("generatebutton");
 	generateButton.onclick = generateZip;
 }
